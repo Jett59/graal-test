@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -36,5 +37,21 @@ public class Main extends Application {
 		rotation.setCycleCount(-1);
 		rotation.setInterpolator(Interpolator.LINEAR);
 		rotation.play();
+		Group gameRoot = buildGame ();
+		scene.setRoot(gameRoot);
+	}
+	public Group buildGame () {
+		Group result = new Group ();
+		Rectangle rectangle = new Rectangle(200, 200, Color.ORANGE);
+		result.getChildren().add(rectangle);
+		rectangle.setOnScroll(evt -> {
+			rectangle.setX(evt.getSceneX() - rectangle.getWidth() / 2d);
+			rectangle.setY(evt.getSceneY() - rectangle.getHeight() / 2d);
+		});
+		rectangle.setOnMouseDragged(evt -> {
+			rectangle.setX(evt.getSceneX() - rectangle.getWidth() / 2d);
+			rectangle.setY(evt.getSceneY() - rectangle.getHeight() / 2d);
+		});
+		return result;
 	}
 		}
