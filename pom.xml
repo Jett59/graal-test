@@ -28,6 +28,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 		<artifactId>client-maven-plugin</artifactId>
 		<version>0.1.39</version>
 		<configuration>
+            <target>ios</target>
 		<mainClass>app.cleancode.graal_test.Main</mainClass>
 		</configuration>
 		</plugin>
