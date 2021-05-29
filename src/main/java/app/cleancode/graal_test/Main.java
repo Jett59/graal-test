@@ -4,10 +4,12 @@ import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
 import javafx.application.Application;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -17,10 +19,11 @@ public class Main extends Application {
 	public static void main(String [] args) {
 		launch (args);
 	}
- 
+private Screen screen; 
+
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		Screen screen = Screen.getPrimary();
+		screen = Screen.getPrimary();
 		Rectangle rectangle = new Rectangle (100, 100);
 		rectangle.setX(screen.getBounds().getWidth() / 2d - rectangle.getWidth() / 2d);
 		rectangle.setY(screen.getBounds().getHeight() / 2d - rectangle.getHeight() / 2d);
@@ -52,6 +55,19 @@ public class Main extends Application {
 			rectangle.setX(evt.getSceneX() - rectangle.getWidth() / 2d);
 			rectangle.setY(evt.getSceneY() - rectangle.getHeight() / 2d);
 		});
+		rectangle.setOnTouchMoved(evt -> {
+			toggleColors (rectangle);
+		});
+		rectangle.setOnMouseClicked(evt -> {
+			toggleColors(rectangle);
+		});
 		return result;
+	}
+	public void toggleColors (Shape s) {
+		if (s.getFill().equals(Color.ORANGE)) {
+			s.setFill(Color.GREEN);
+		}else {
+			s.setFill(Color.ORANGE);
+		}
 	}
 		}
