@@ -6,6 +6,8 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -45,6 +47,9 @@ private Screen screen;
 	}
 	public Group buildGame () {
 		Group result = new Group ();
+		Image background = new Image("https://c.files.bbci.co.uk/12A9B/production/_111434467_gettyimages-1143489763.jpg", screen.getBounds().getWidth(), screen.getBounds().getHeight(), false, false);
+		ImageView backgroundView = new ImageView(background);
+		result.getChildren().add(backgroundView);
 		Rectangle rectangle = new Rectangle(200, 200, Color.ORANGE);
 		result.getChildren().add(rectangle);
 		rectangle.setOnScroll(evt -> {
