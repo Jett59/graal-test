@@ -28,13 +28,19 @@ public void start (Pane root, Screen screen) {
 		path.set(System.getProperty("user.home"));
 		BorderPane wholeScreen = new BorderPane();
 		FlowPane files = new FlowPane();
+		files.setOnScroll(evt -> {
+			wholeScreen.setTranslateY(wholeScreen.getTranslateY() + evt.getDeltaY());
+		});
+		path.addListener((observable, oldValue, newValue)-> {
+			wholeScreen.setTranslateY(0);
+		});
 		TextField pathText = new TextField();
 		pathText.setEditable(false);
 		pathText.textProperty().bind(path);
 		pathText.setFont(new Font(48));
 		wholeScreen.setTop(pathText);
 		BorderPane.setAlignment(pathText, Pos.CENTER);
-		wholeScreen.setCenter(new ScrollPane(files));
+		wholeScreen.setCenter(files);
 		root.setStyle("-fx-background-color: white;");
 		root.getChildren().add(wholeScreen);
 		populateFiles (files);
