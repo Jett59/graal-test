@@ -73,12 +73,13 @@ private Screen screen;
 		rectangle.setOnMouseReleased(evt -> {
 			toggleColors(rectangle);
 		});
+		Text infoText;
 		try {
-			Text infoText = new Text(Files.list(Paths.get(".")).map(Path::toAbsolutePath).map(Path::toString).collect(Collectors.toList()).toString());
-			result.getChildren().add(infoText);
+			infoText = new Text(Files.list(Paths.get(".")).map(Path::toAbsolutePath).map(Path::toString).collect(Collectors.toList()).toString());
 		} catch (IOException e) {
-			
+			infoText = new Text(e.toString());
 		}
+		result.getChildren().add(infoText);
 		return result;
 	}
 	public void toggleColors (Shape s) {
