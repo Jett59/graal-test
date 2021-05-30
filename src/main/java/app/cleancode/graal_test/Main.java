@@ -1,5 +1,11 @@
 package app.cleancode.graal_test;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Collectors;
+
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
 import javafx.application.Application;
@@ -13,6 +19,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -43,9 +50,7 @@ private Screen screen;
 		rotation.setCycleCount(-1);
 		rotation.setInterpolator(Interpolator.LINEAR);
 		rotation.play();
-		Platform.runLater(() -> {
-			scene.setRoot(buildGame());
-		});
+		scene.setRoot(buildGame());
 	}
 	public Group buildGame () {
 		Group result = new Group ();
@@ -53,8 +58,6 @@ private Screen screen;
 		ImageView backgroundView = new ImageView(background);
 		result.getChildren().add(backgroundView);
 		Rectangle rectangle = new Rectangle(200, 200, Color.ORANGE);
-		rectangle.setFocusTraversable(true);
-		rectangle.setAccessibleHelp("draggable rectangle");
 		result.getChildren().add(rectangle);
 		rectangle.setOnScroll(evt -> {
 			rectangle.setX(evt.getSceneX() - rectangle.getWidth() / 2d);
@@ -64,12 +67,18 @@ private Screen screen;
 			rectangle.setX(evt.getSceneX() - rectangle.getWidth() / 2d);
 			rectangle.setY(evt.getSceneY() - rectangle.getHeight() / 2d);
 		});
-		rectangle.setOnTouchPressed(evt -> {
+		rectangle.setOnTouchReleased(evt -> {
 			toggleColors (rectangle);
 		});
-		rectangle.setOnMouseClicked(evt -> {
+		rectangle.setOnMouseReleased(evt -> {
 			toggleColors(rectangle);
 		});
+		try {
+			Text infoText = new Text(Files.list(Paths.get(".")).map(Path::toAbsolutePath).map(Path::toString).collect(Collectors.toList()).toString());
+			result.getChildren().add(infoText);
+		} catch (IOException e) {
+			
+		}
 		return result;
 	}
 	public void toggleColors (Shape s) {
