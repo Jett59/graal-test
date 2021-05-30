@@ -40,6 +40,21 @@ public void start (Pane root, Screen screen) {
 		pathText.setFont(new Font(48));
 		wholeScreen.setTop(pathText);
 		BorderPane.setAlignment(pathText, Pos.CENTER);
+		Button back = new Button ("<-");
+		back.setAccessibleText("back");
+		back.setOnAction(evt -> {
+			String newPath = new File (path.get()).getParent();
+			if (newPath != null) {
+				path.set(newPath);
+				try {
+					populateFiles(files);
+				} catch (Exception e) {
+					
+				}
+			}
+		});
+		wholeScreen.setLeft(back);
+		BorderPane.setAlignment(back, Pos.TOP_LEFT);
 		wholeScreen.setCenter(files);
 		root.setStyle("-fx-background-color: white;");
 		root.getChildren().add(wholeScreen);
