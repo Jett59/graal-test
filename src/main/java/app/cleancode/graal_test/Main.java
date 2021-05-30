@@ -79,6 +79,9 @@ private Screen screen;
 		} catch (IOException e) {
 			infoText = new Text(e.toString());
 		}
+		infoText.setWrappingWidth(rectangle.getWidth());
+		infoText.translateXProperty().bind(rectangle.xProperty());
+		infoText.translateYProperty().bind(rectangle.yProperty().add(rectangle.getHeight() / 2d));
 		result.getChildren().add(infoText);
 		return result;
 	}
