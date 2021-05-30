@@ -13,6 +13,7 @@ import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
@@ -83,6 +84,13 @@ private Screen screen;
 		infoText.translateXProperty().bind(rectangle.xProperty());
 		infoText.translateYProperty().bind(rectangle.yProperty().add(rectangle.getHeight() / 2d));
 		result.getChildren().add(infoText);
+		Button explorer = new Button("File Explorer");
+		explorer.setTranslateX(screen.getBounds().getWidth() / 2d - explorer.getBoundsInLocal().getWidth() / 2d);
+		explorer.setOnAction(evt -> {
+			result.getChildren().clear();
+			new ExplorerView().start(result);
+		});
+		result.getChildren().add(explorer);
 		return result;
 	}
 	public void toggleColors (Shape s) {
