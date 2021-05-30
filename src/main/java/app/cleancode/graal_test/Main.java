@@ -3,6 +3,7 @@ package app.cleancode.graal_test;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -42,8 +43,9 @@ private Screen screen;
 		rotation.setCycleCount(-1);
 		rotation.setInterpolator(Interpolator.LINEAR);
 		rotation.play();
-		Group gameRoot = buildGame ();
-		scene.setRoot(gameRoot);
+		Platform.runLater(() -> {
+			scene.setRoot(buildGame());
+		});
 	}
 	public Group buildGame () {
 		Group result = new Group ();
@@ -51,6 +53,8 @@ private Screen screen;
 		ImageView backgroundView = new ImageView(background);
 		result.getChildren().add(backgroundView);
 		Rectangle rectangle = new Rectangle(200, 200, Color.ORANGE);
+		rectangle.setFocusTraversable(true);
+		rectangle.setAccessibleHelp("draggable rectangle");
 		result.getChildren().add(rectangle);
 		rectangle.setOnScroll(evt -> {
 			rectangle.setX(evt.getSceneX() - rectangle.getWidth() / 2d);
@@ -60,7 +64,7 @@ private Screen screen;
 			rectangle.setX(evt.getSceneX() - rectangle.getWidth() / 2d);
 			rectangle.setY(evt.getSceneY() - rectangle.getHeight() / 2d);
 		});
-		rectangle.setOnTouchMoved(evt -> {
+		rectangle.setOnTouchPressed(evt -> {
 			toggleColors (rectangle);
 		});
 		rectangle.setOnMouseClicked(evt -> {
