@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -53,8 +54,8 @@ private Screen screen;
 		rotation.play();
 		scene.setRoot(buildGame());
 	}
-	public Group buildGame () {
-		Group result = new Group ();
+	public Pane buildGame () {
+		Pane result = new Pane();
 		Image background = new Image("https://c.files.bbci.co.uk/12A9B/production/_111434467_gettyimages-1143489763.jpg", screen.getBounds().getWidth(), screen.getBounds().getHeight(), false, false);
 		ImageView backgroundView = new ImageView(background);
 		result.getChildren().add(backgroundView);
@@ -88,7 +89,7 @@ private Screen screen;
 		explorer.setTranslateX(screen.getBounds().getWidth() / 2d - explorer.getBoundsInLocal().getWidth() / 2d);
 		explorer.setOnAction(evt -> {
 			result.getChildren().clear();
-			new ExplorerView().start(result);
+			new ExplorerView().start(result, screen);
 		});
 		result.getChildren().add(explorer);
 		return result;
